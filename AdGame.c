@@ -3,7 +3,7 @@
 #include <time.h>
 #define valido 1
 
-int main() {
+int main( void ) {
 
 	// imprime cabecalho do nosso jogo
 	printf("********************\n");
