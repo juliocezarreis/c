@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define valido 1
+#define valido1 0
+#define valido2 99
 
 int main( void ) {
 
@@ -18,21 +19,13 @@ int main( void ) {
 	int chute;
 	int tentativas;
 	tentativas = 1;
-	//pontuacao
-	double pontosperdidos;
-	double pontos;
-	pontos = 1000;
 
 	while(1) {
 		printf("\nTentativa %d\n", tentativas);
 		printf("Qual é o seu chute? ");
 		scanf("%d", &chute);
 
-		pontosperdidos = (double)(chute - numerosecreto) / (double)2;
-		double total = abs(pontosperdidos);
-		pontos = pontos - total;
-
-		if(chute < valido) {
+		if(chute < valido1 || chute > valido2) {
 			printf("Chute invalido!\n");
 			continue;
 		}
@@ -40,9 +33,8 @@ int main( void ) {
 		int maior = chute > numerosecreto;
 
 		if(acertou) {
-			printf("\nBem na mosca!\n");
+			printf("\nBEM NA MOSCA! Em %d tentativas\n" , tentativas);
         		printf("Fim de jogo!\n");
-		        printf("Pontuacao: %.1f\n\n", pontos);
 			printf("Jogar novamente?\n1 - yeep\n0 - noop\n");
 			printf("Resposta: ");
 			int jogar;
