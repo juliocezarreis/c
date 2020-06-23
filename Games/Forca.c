@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include "Forca.h"
 
 void abertura () {
 
@@ -63,7 +65,24 @@ void chuta ( char chutes[26], int* chutesdados ) {
 
 /*Recebe a palavra secreta*/
 void palavrasecreta ( char* palavra ) {
-	sprintf(palavra, "mao");
+
+	FILE* f;
+	f = fopen("Palavras.txt", "r");
+
+	if ( f == 0 ) {
+		printf("Erro no banco de dados.\n");
+		exit(1);
+	}
+	int qtdpalavras;
+	fscanf(f, "%d", &qtdpalavras);
+
+	srand( time(0) );
+	int randomico = rand() % qtdpalavras;
+
+	for ( int i = 0; i <= randomico; i++ ) {
+		fscanf(f, "%s", palavra);
+	}
+	fclose(f);
 }
 
 /*Verifica se errou o máximo de tentativas(foi enforcado)*/
