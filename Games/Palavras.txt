@@ -1,8 +1,12 @@
-7
+11
 melao
 alho
 comida
 escapscencia
 jogador
-pneumoultramicroscopicossilicovulcanoconiotico
 arroz
+bola
+balao
+macarrao
+escola
+onibus

@@ -13,6 +13,13 @@ void abertura () {
 
 }
 
+void errofopen ( FILE* f ) {
+	if ( f == 0 ) {
+		printf("Erro no banco de dados.\n");
+		exit(1);
+	}
+}
+
 /*Compara as letras com os chutes*/
 int compara ( char letra, char* chutes, int chutesdados ) {
 
@@ -69,10 +76,8 @@ void palavrasecreta ( char* palavra ) {
 	FILE* f;
 	f = fopen("Palavras.txt", "r");
 
-	if ( f == 0 ) {
-		printf("Erro no banco de dados.\n");
-		exit(1);
-	}
+	errofopen( f );
+
 	int qtdpalavras;
 	fscanf(f, "%d", &qtdpalavras);
 
@@ -109,6 +114,39 @@ int enforcou ( int* chutesdados, char* palavra, char* chutes ) {
 	return erros >= 5;
 }
 
+void adicionapalavra () {
+	char quer;
+
+	printf("\nQuer adicionar uma palavra no jogo (S/N)?\nResposta: ");
+	scanf(" %c", &quer);
+
+	if ( quer == 'S' || quer == 's' ) {
+
+		char novapalavra[60];
+
+		printf("Digite a palavra: ");
+		scanf("%s", novapalavra);
+		
+		FILE* f;
+		f = fopen("Palavras.txt", "r+");
+
+		errofopen( f );	
+
+		int qtd;
+		fscanf(f, "%d", &qtd);
+		qtd++;
+		fseek(f, 0, SEEK_SET);
+		fprintf(f, "%d", qtd);
+
+		fseek(f, 0, SEEK_END);
+		fprintf(f, "\n%s", novapalavra);
+
+		printf("OK!\n");
+
+		fclose(f);
+	}
+}
+
 int main () {
 
 	char palavra[26];
@@ -124,6 +162,8 @@ int main () {
 		chuta( chutes, &chutesdados );
 
 	}while( !ganhou(palavra, chutes, chutesdados) && !enforcou( &chutesdados, palavra, chutes ) );
+
+	adicionapalavra();
 
 	return 0;
 }
