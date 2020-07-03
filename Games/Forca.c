@@ -4,13 +4,101 @@
 #include <time.h>
 #include "Forca.h"
 
+int errosTotais = 0;
+char letraAtual;
+
 void abertura () {
 
 	printf(" _______________\n");
 	printf("|               |\n");
 	printf("| JOGO DA FORCA |\n");
-	printf("|_______________|\n");
+	printf("|_______________|\n\n");
+	printf("  _ _ _ _\n");
+	printf(" |       |\n");
+	printf(" |		\n");
+	printf(" |		\n");
+	printf(" |		\n");
+	printf("_|_		\n\n");
 
+}
+
+void imagemVitoria () {
+	printf("\nBOA!\n");
+	printf("  _ _ _ _\n");
+	printf(" |       |            Obrigado!\n");
+	printf(" |               (_) /\n");
+	printf(" |              --|--\n");
+	printf(" |               |-|\n");
+	printf("_|_\n\n");
+}
+
+void contaErros ( int* chutesdados, char* palavra, char* chutes ) {
+
+	int existe = 0;
+
+	for ( int i = 0; i < strlen(palavra); i++ ) {
+
+		if ( letraAtual == palavra[i] ) {
+			existe = 1;
+			break;
+		}
+	}
+	if ( !existe ) {
+		errosTotais++;
+	}
+}
+
+void desenhaForca ( int* chutesdados, char* palavra, char* chutes ) {
+
+	if ( errosTotais == 0 ) {
+		printf("  _ _ _ _\n");
+		printf(" |       |\n");
+		printf(" |		\n");
+		printf(" |		\n");
+		printf(" |		\n");
+		printf("_|_		\n");
+	}
+	else if ( errosTotais == 1 ) {
+		printf("  _ _ _ _\n");
+		printf(" |       |\n");
+		printf(" |      (_)\n");
+		printf(" |		\n");
+		printf(" |		\n");
+		printf("_|_		\n");
+	}
+	else if ( errosTotais == 2 ) {
+		printf("  _ _ _ _\n");
+		printf(" |       |\n");
+		printf(" |      (_)\n");
+		printf(" |       |\n");
+		printf(" |		\n");
+		printf("_|_		\n");
+	}
+	else if ( errosTotais == 3 ) {
+		printf("  _ _ _ _\n");
+		printf(" |       |\n");
+		printf(" |      (_)\n");
+		printf(" |     --|\n");
+		printf(" |		\n");
+		printf("_|_		\n");
+	}
+	else if ( errosTotais == 4 ) {
+		printf("  _ _ _ _\n");
+		printf(" |       |\n");
+		printf(" |      (_)\n");
+		printf(" |     --|--\n");
+		printf(" |		\n");
+		printf("_|_		\n");
+	}
+	else if ( errosTotais == 5 ) {
+		printf("\n  _ _ _ _   MORRI!\n");
+		printf(" |       | /\n");
+		printf(" |      (_)\n");
+		printf(" |     --|--\n");
+		printf(" |      |-|\n");
+		printf("_|_		\n");
+		printf("     GAMEOVER\n");
+	}
 }
 
 void errofopen ( FILE* f ) {
@@ -46,7 +134,7 @@ int ganhou ( char* palavra, char* chutes, int chutesdados ) {
 }
 
 /*Imprime a letra(se acertou) ou um traço(se errou)*/
-void desenhaForca ( char* palavra, char* chutes, int chutesdados ) {
+void imprimeEspacos ( char* palavra, char* chutes, int chutesdados ) {
 
         for ( int i = 0; i < strlen(palavra); i++ ) {
                 if ( compara( palavra[i], chutes, chutesdados ) ) {
@@ -66,6 +154,7 @@ void chuta ( char chutes[26], int* chutesdados ) {
         printf("Qual letra? ");
         scanf(" %c", &chute);
         chutes[*chutesdados] = chute;
+		letraAtual = chute;
         (*chutesdados)++;
 
 }
@@ -109,6 +198,10 @@ int enforcou ( int* chutesdados, char* palavra, char* chutes ) {
 		if ( !existe ) {
 			erros++;
 		}
+	}
+
+	if ( erros >= 5 ) {
+		printf("\nA palavra secreta era: %s\n", palavra);
 	}
 
 	return erros >= 5;
@@ -158,8 +251,17 @@ int main () {
 	palavrasecreta(palavra);
 
 	do {
-		desenhaForca( palavra, chutes, chutesdados );
+
+		imprimeEspacos( palavra, chutes, chutesdados );
 		chuta( chutes, &chutesdados );
+		contaErros(&chutesdados, palavra, chutes);
+		desenhaForca(&chutesdados, palavra, chutes);
+	
+		printf("%d\n", errosTotais);
+
+		if ( ganhou(palavra, chutes, chutesdados) ) {
+			imagemVitoria();
+		}
 
 	}while( !ganhou(palavra, chutes, chutesdados) && !enforcou( &chutesdados, palavra, chutes ) );
 

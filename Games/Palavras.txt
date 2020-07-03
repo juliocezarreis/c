@@ -1,8 +1,8 @@
-11
+12
 melao
 alho
 comida
-escapscencia
+escalapscencia
 jogador
 arroz
 bola
@@ -10,3 +10,4 @@ balao
 macarrao
 escola
 onibus
+mula

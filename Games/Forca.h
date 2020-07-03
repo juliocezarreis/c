@@ -1,8 +1,11 @@
 void abertura();
 int compara ( char letra, char* chutes, int chutesdados );
 int ganhou ( char* palavra, char* chutes, int chutesdados );
-void desenhaForca ( char* palavra, char* chutes, int chutesdados );
+void imprimeEspacos ( char* palavra, char* chutes, int chutesdados );
 void chuta ( char chutes[26], int* chutesdados );
 void palavrasecreta ( char* palavra );
 int enforcou ( int* chutesdados, char* palavra, char* chutes );
 void adicionapalavra();
+void desenhaForca ( int* chutesdados, char* palavra, char* chutes );
+void contaErros ( int* chutesdados, char* palavra, char* chutes ); 
+void imagemVitoria ();
